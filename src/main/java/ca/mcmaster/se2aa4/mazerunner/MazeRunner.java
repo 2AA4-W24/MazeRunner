@@ -8,8 +8,4 @@ public class MazeRunner {
         maze = maze_in;
     }
 
-    public String runMaze() {
-        MazeSolver solver = new RightHandAlgo();
-        return solver.solveMaze(maze);
-    }
 }
