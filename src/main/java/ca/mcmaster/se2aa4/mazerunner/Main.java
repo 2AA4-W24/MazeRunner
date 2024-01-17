@@ -37,8 +37,8 @@ public class Main {
             }
             MazeReader reader = new MazeReader(config.input_maze());
             Maze maze = reader.readMaze();
-            MazeRunner runner = new MazeRunner(maze);
-            String solution = runner.runMaze();
+            MazeSolver solver = new RightHandAlgo();
+            String solution = solver.solveMaze(maze);
             System.out.println("Solution: " + solution);
         } catch(Exception e) {
             logger.error(e.getMessage());
