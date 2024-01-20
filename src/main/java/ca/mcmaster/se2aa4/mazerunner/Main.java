@@ -37,6 +37,7 @@ public class Main {
             }
             MazeReader reader = new MazeReader(config.input_maze());
             Maze maze = reader.readMaze();
+            logger.info("**** Computing path");
             MazeSolver solver = new RightHandAlgo();
             String solution = solver.solveMaze(maze);
             System.out.println("Solution: " + solution);
@@ -44,8 +45,6 @@ public class Main {
             logger.error(e.getMessage());
             System.exit(1);
         }
-        logger.info("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 
