@@ -1,4 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
+import java.util.ArrayList;
 
 public class MazeReader {
 
@@ -10,7 +11,6 @@ public class MazeReader {
 
     public Maze readMaze() {
         Maze maze = new Maze();
-        maze.addLine("no maze yet");
         return maze;
     }
 
