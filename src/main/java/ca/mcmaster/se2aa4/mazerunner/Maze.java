@@ -6,20 +6,19 @@ public class Maze {
     private ArrayList<ArrayList<Point>> maze = new ArrayList<ArrayList<Point>>();
     private int maze_width = 0;
 
-    public void addLine(Point[] line_in) {
+    public void addLine(ArrayList<Point> line_in) {
 
         if (maze_width == 0) {
-            maze_width = line_in.length;
-        } else if (maze_width != line_in.length){
-            throw new IllegalArgumentException("Input length of " + line_in.length + " illegal for maze of width " + maze_width);
+            maze_width = line_in.size();
+        } else if (maze_width != line_in.size()){
+            throw new IllegalArgumentException("Input length of " + line_in.size() + " illegal for maze of width " + maze_width);
         }
 
-        ArrayList<Point> maze_line = new ArrayList<Point>();
-
-        for (int i = 0; i < line_in.length; i++) {
-            maze_line.add(line_in[i]);
+        ArrayList<Point> line = new ArrayList<Point>();
+        for (Point point : line_in) {
+            line.add(point);
         }
-        maze.add(maze_line);
+        maze.add(line);
     }
 
     public Point getPoint(int x_coord, int y_coord) {

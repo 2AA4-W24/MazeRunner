@@ -23,18 +23,6 @@ public class Main {
         try {
             Configuration config = configure(args);
             logger.info("**** Reading the maze from file " + config.input_maze());
-            BufferedReader read = new BufferedReader(new FileReader(config.input_maze()));
-            String line;
-            while ((line = read.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
-            }
             MazeReader reader = new MazeReader(config.input_maze());
             Maze maze = reader.readMaze();
             logger.info("**** Computing path");
