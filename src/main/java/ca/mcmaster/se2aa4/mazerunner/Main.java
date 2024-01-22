@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.ObjectInputFilter.Config;
 import java.lang.module.Configuration;
 
@@ -23,20 +20,9 @@ public class Main {
         try {
             Configuration config = configure(args);
             logger.info("**** Reading the maze from file " + config.input_maze());
-            BufferedReader read = new BufferedReader(new FileReader(config.input_maze()));
-            String line;
-            while ((line = read.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
-            }
             MazeReader reader = new MazeReader(config.input_maze());
             Maze maze = reader.readMaze();
+            logger.info("**** Computing path");
             MazeSolver solver = new RightHandAlgo();
             String solution = solver.solveMaze(maze);
             System.out.println("Solution: " + solution);
@@ -44,8 +30,6 @@ public class Main {
             logger.error(e.getMessage());
             System.exit(1);
         }
-        logger.info("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 
