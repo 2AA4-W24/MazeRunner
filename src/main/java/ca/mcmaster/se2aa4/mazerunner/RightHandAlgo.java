@@ -11,9 +11,6 @@ public class RightHandAlgo implements MazeSolver{
         try {
             MazeRunner runner = new MazeRunner(maze);
             runner.moveForward();
-            runner.moveForward();
-            runner.moveForward();
-            runner.moveForward();
             return runner.path();
         } catch (EntranceException | ExitException e) {
             logger.error(e.getMessage());

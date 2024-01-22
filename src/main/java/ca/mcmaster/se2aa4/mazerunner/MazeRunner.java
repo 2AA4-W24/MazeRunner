@@ -9,20 +9,19 @@ public class MazeRunner {
     private static final Logger logger = LogManager.getLogger();
 
     private Maze maze;
-    private int x_coord;
-    private int y_coord;
+    private Coordinate coords = new Coordinate();
     private Heading heading;
     private String path;
-    private int start_coord;
-    private int end_coord;
+    private Coordinate start_coords = new Coordinate();
+    private Coordinate end_coords = new Coordinate();
 
     public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
         maze = maze_in;
         path = "";
-        start_coord = findStart();
-        logger.info("**** Entrance y cooridate: " + start_coord);
-        end_coord = findEnd();
-        logger.info("**** Exit y cooridate: " + end_coord);
+        start_coords.set(0,findStart());
+        logger.info("**** Entrance y cooridate: " + start_coords.y());
+        end_coords.set(maze.width() - 1, findEnd());
+        logger.info("**** Exit y cooridate: " + end_coords.y());
     }
 
     private int findStart() throws EntranceException {
@@ -45,8 +44,10 @@ public class MazeRunner {
         throw new ExitException("Unable to find maze exit");
     }
 
-    public int getEnd() {
-        return end_coord;
+    public Coordinate getEnd() {
+        Coordinate end = new Coordinate();
+        end.set(end_coords.x(), end_coords.y());
+        return end;
     }
 
     public String path() {
@@ -57,24 +58,22 @@ public class MazeRunner {
         return heading;
     }
 
-    public int xCoord() {
-        return x_coord;
-    }
-
-    public int yCoord() {
-        return y_coord;
+    public Coordinate coords() {
+        Coordinate temp_coord = new Coordinate();
+        temp_coord.set(coords.x(), coords.y());
+        return temp_coord;
     }
 
     public void moveForward() {
         path = path + "F";
         if (heading == Heading.UP) {
-            y_coord++;
+            coords.setY(coords.y() + 1);
         } else if (heading == Heading.DOWN) {
-            y_coord--;
+            coords.setY(coords.y() - 1);
         } else if (heading == Heading.RIGHT) {
-            x_coord++;
+            coords.setX(coords.x() + 1);
         } else if (heading == Heading.LEFT) {
-            x_coord--;
+            coords.setX(coords.x() - 1);
         }
     }
 
@@ -102,6 +101,10 @@ public class MazeRunner {
         } else if (heading == Heading.LEFT) {
             heading = Heading.DOWN;
         }
+    }
+
+    public boolean reachedExit() {
+        return false;
     }
 
 }
