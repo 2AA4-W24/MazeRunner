@@ -5,6 +5,7 @@ public class Maze {
 
     private ArrayList<ArrayList<Point>> maze = new ArrayList<ArrayList<Point>>();
     private int maze_width = 0;
+    private int maze_height = 0;
 
     public void addLine(ArrayList<Point> line_in) {
 
@@ -19,6 +20,15 @@ public class Maze {
             line.add(point);
         }
         maze.add(line);
+        maze_height++;
+    }
+
+    public int height() {
+        return maze_height;
+    }
+
+    public int width() {
+        return maze_width;
     }
 
     public Point getPoint(int x_coord, int y_coord) {

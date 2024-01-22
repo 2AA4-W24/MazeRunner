@@ -1,4 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,32 +16,44 @@ public class MazeRunner {
     private int start_coord;
     private int end_coord;
 
-    public MazeRunner(Maze maze_in) {
+    public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
         maze = maze_in;
         path = "";
         start_coord = findStart();
-        logger.info("Entrance y cooridate: " + start_coord);
+        logger.info("**** Entrance y cooridate: " + start_coord);
         end_coord = findEnd();
-        logger.info("Exit y cooridate: " + end_coord);
+        logger.info("**** Exit y cooridate: " + end_coord);
     }
 
-    private int findStart() {
-        return 2;
+    private int findStart() throws EntranceException {
+        ArrayList<Point> entry_column = maze.getColumn(0);
+        for (int i = 0; i < entry_column.size(); i++) {
+            if(entry_column.get(i) == Point.PASS) {
+                return i;
+            }
+        }
+        throw new EntranceException("Unable to find maze entrance");
     }
 
-    private int findEnd() {
-        return 2;
+    private int findEnd() throws ExitException {
+        ArrayList<Point> entry_column = maze.getColumn(maze.width() - 1);
+        for (int i = 0; i < entry_column.size(); i++) {
+            if(entry_column.get(i) == Point.PASS) {
+                return i;
+            }
+        }
+        throw new ExitException("Unable to find maze exit");
     }
 
     public int getEnd() {
         return end_coord;
     }
 
-    public String getPath() {
+    public String path() {
         return new String(path);
     }
 
-    public Heading getHeading() {
+    public Heading heading() {
         return heading;
     }
 
