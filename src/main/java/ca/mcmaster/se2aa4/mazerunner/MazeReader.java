@@ -18,16 +18,16 @@ public class MazeReader {
 
         BufferedReader read = new BufferedReader(new FileReader(maze_file));
         String line_in;
-        ArrayList<Point> line = new ArrayList<Point>();
+        ArrayList<Tile> line = new ArrayList<Tile>();
 
         while ((line_in = read.readLine()) != null) {
             line.clear();
 
             for (int i = 0; i < line_in.length(); i++) {
                 if (line_in.charAt(i) == '#') {
-                    line.add(Point.WALL);
+                    line.add(Tile.WALL);
                 } else if (line_in.charAt(i) == ' ') {
-                    line.add(Point.PASS);
+                    line.add(Tile.PASS);
                 }
             }
             maze.addLine(line);
@@ -35,8 +35,8 @@ public class MazeReader {
         read.close();
 
         for (int i = 0; i < 7; i++) {
-            ArrayList<Point> maze_line = maze.getLine(i);
-            for (Point point : maze_line) {
+            ArrayList<Tile> maze_line = maze.getLine(i);
+            for (Tile point : maze_line) {
                 System.out.print(point + " ");
             }
             System.out.println();

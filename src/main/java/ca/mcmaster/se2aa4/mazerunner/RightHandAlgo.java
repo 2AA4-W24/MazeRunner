@@ -11,6 +11,22 @@ public class RightHandAlgo implements MazeSolver{
         try {
             MazeRunner runner = new MazeRunner(maze);
             runner.moveForward();
+            while (!runner.reachedExit()) {
+                switch (runner.heading()) {
+                    case Heading.UP: {
+                        Coordinate right_coord = runner.coords();
+                        Coordinate forward_coord = runner.coords();
+                        Coordinate left_coord = runner.coords();
+                        Coordinate rear_coord = runner.coords();
+                        right_coord.setX(right_coord.x() + 1);
+                        forward_coord.setY(forward_coord.y() - 1);
+                        left_coord.setX(left_coord.x() - 1);
+                        rear_coord.setY(rear_coord.y() + 1);
+
+                    }
+
+                }
+            }
             return runner.path();
         } catch (EntranceException | ExitException e) {
             logger.error(e.getMessage());

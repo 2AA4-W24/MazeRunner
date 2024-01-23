@@ -25,9 +25,9 @@ public class MazeRunner {
     }
 
     private int findStart() throws EntranceException {
-        ArrayList<Point> entry_column = maze.getColumn(0);
+        ArrayList<Tile> entry_column = maze.getColumn(0);
         for (int i = 0; i < entry_column.size(); i++) {
-            if(entry_column.get(i) == Point.PASS) {
+            if(entry_column.get(i) == Tile.PASS) {
                 return i;
             }
         }
@@ -35,9 +35,9 @@ public class MazeRunner {
     }
 
     private int findEnd() throws ExitException {
-        ArrayList<Point> entry_column = maze.getColumn(maze.width() - 1);
+        ArrayList<Tile> entry_column = maze.getColumn(maze.width() - 1);
         for (int i = 0; i < entry_column.size(); i++) {
-            if(entry_column.get(i) == Point.PASS) {
+            if(entry_column.get(i) == Tile.PASS) {
                 return i;
             }
         }

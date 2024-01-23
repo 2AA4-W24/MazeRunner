@@ -4,9 +4,18 @@ public class Coordinate {
 	private int x_coord;
 	private int y_coord;
 
-	public void set(int x, int y) {
+	public Coordinate() {
+		x_coord = 0;
+		y_coord = 0;
+	}
+
+	public Coordinate(int x, int y) {
 		x_coord = x;
 		y_coord = y;
+	}
+
+	public void set(int x, int y) {
+		x_coord = x;
 	}
 
 	public void setX(int x) {
