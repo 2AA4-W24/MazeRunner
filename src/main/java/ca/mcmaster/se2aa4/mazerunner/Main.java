@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.ObjectInputFilter.Config;
 import java.lang.module.Configuration;
 
@@ -26,7 +28,7 @@ public class Main {
             MazeSolver solver = new RightHandAlgo();
             String solution = solver.solveMaze(maze);
             System.out.println("Solution: " + solution);
-        } catch(Exception e) {
+        } catch(IOException | ParseException e) {
             logger.error(e.getMessage());
             System.exit(1);
         }

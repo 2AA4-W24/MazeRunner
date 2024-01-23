@@ -33,14 +33,6 @@ public class MazeReader {
             maze.addLine(line);
         }
         read.close();
-
-        for (int i = 0; i < 7; i++) {
-            ArrayList<Tile> maze_line = maze.getLine(i);
-            for (Tile point : maze_line) {
-                System.out.print(point + " ");
-            }
-            System.out.println();
-        }
         return maze;
     }
 

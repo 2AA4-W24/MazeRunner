@@ -14,6 +14,15 @@ public class Coordinate {
 		y_coord = y;
 	}
 
+	public Coordinate(Coordinate coordinate_copy) {
+		x_coord = coordinate_copy.x();
+		y_coord = coordinate_copy.y();
+	}
+
+	public String toString() {
+		return String.valueOf(x_coord) + "," + String.valueOf(y_coord);
+	}
+
 	public void set(int x, int y) {
 		x_coord = x;
 	}
