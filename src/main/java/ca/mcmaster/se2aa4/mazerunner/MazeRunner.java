@@ -11,13 +11,12 @@ public class MazeRunner {
     private Maze maze;
     private Coordinate coords;
     private Heading heading;
-    private String path;
     private Coordinate start_coords;
     private Coordinate end_coords;
+    private MovementLogger path_logger = new MovementLogger();
 
     public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
         maze = maze_in;
-        path = "";
         heading = Heading.RIGHT;
         start_coords = new Coordinate(0,findStart());
         logger.info("**** Entrance y cooridate: " + start_coords.y());
@@ -47,13 +46,8 @@ public class MazeRunner {
         throw new ExitException("Unable to find maze exit");
     }
 
-    public Coordinate getEnd() {
-        Coordinate end = new Coordinate(end_coords);
-        return end;
-    }
-
-    public String path() {
-        return new String(path);
+    public String canonicalPath() {
+        return path_logger.getCanonical();
     }
 
     public Heading heading() {
@@ -66,7 +60,7 @@ public class MazeRunner {
     }
 
     public void moveForward() {
-        path = path + "F";
+        path_logger.forward();
         if (heading == Heading.UP) {
             coords.setY(coords.y() - 1);
         } else if (heading == Heading.DOWN) {
@@ -79,7 +73,7 @@ public class MazeRunner {
     }
 
     public void turnRight() {
-        path = path + "R";
+        path_logger.right();
         if (heading == Heading.UP) {
             heading = Heading.RIGHT;
         } else if (heading == Heading.DOWN) {
@@ -92,7 +86,7 @@ public class MazeRunner {
     }
 
     public void turnLeft() {
-        path = path + "L";
+        path_logger.left();
         if (heading == Heading.UP) {
             heading = Heading.LEFT;
         } else if (heading == Heading.DOWN) {
@@ -111,7 +105,6 @@ public class MazeRunner {
             return false;
         }
     }
-
 }
 
 enum Heading {

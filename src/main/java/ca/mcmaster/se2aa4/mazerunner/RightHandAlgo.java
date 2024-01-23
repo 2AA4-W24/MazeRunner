@@ -74,7 +74,7 @@ public class RightHandAlgo implements MazeSolver{
                     return ("Unable to solve - Runner Trapped");
                 }
             }
-            return runner.path();
+            return runner.canonicalPath();
         } catch (EntranceException | ExitException e) {
             logger.error(e.getMessage());
             return e.getMessage();
