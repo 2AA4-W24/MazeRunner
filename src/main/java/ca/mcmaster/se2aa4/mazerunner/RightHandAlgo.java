@@ -10,7 +10,6 @@ public class RightHandAlgo implements MazeSolver{
     public String solveMaze(Maze maze) {
         try {
             MazeRunner runner = new MazeRunner(maze);
-            logger.info(runner.coords().x() + "," + runner.coords().y());
 
             while (!runner.reachedExit()) {
                 Coordinate right_coord = new Coordinate(runner.coords());
@@ -18,50 +17,37 @@ public class RightHandAlgo implements MazeSolver{
                 Coordinate left_coord = new Coordinate(runner.coords());
                 Coordinate rear_coord = new Coordinate(runner.coords());
 
-                logger.info(runner.coords().x() + "," + runner.coords().y());
-
                 if (runner.heading() == Heading.UP) {
-                    logger.info("heading is up");
                     right_coord.setX(right_coord.x() + 1);
                     forward_coord.setY(forward_coord.y() - 1);
                     left_coord.setX(left_coord.x() - 1);
                     rear_coord.setY(rear_coord.y() + 1);
                 } else if (runner.heading() == Heading.DOWN) {
-                    logger.info("heading is down");
                     right_coord.setX(right_coord.x() - 1);
                     forward_coord.setY(forward_coord.y() + 1);
                     left_coord.setX(left_coord.x() + 1);
                     rear_coord.setY(rear_coord.y() - 1);
                 } else if (runner.heading() == Heading.RIGHT) {
-                    logger.info("heading is right");
                     right_coord.setY(right_coord.y() + 1);
                     forward_coord.setX(forward_coord.x() + 1);
                     left_coord.setY(left_coord.y() - 1);
                     rear_coord.setX(rear_coord.x() - 1);
                 } else if (runner.heading() == Heading.LEFT) {
-                    logger.info("heading is left");
                     right_coord.setY(right_coord.y() - 1);
                     forward_coord.setX(forward_coord.x() - 1);
                     left_coord.setY(left_coord.y() + 1);
                     rear_coord.setX(rear_coord.x() + 1);
                 }
 
-                logger.info("Switch Statement exited");
-                logger.info(runner.coords().x() + "," + runner.coords().y());
-
                 if (maze.getPoint(right_coord) == Tile.PASS) {
-                    logger.info("Turning Right");
                     runner.turnRight();
                     runner.moveForward();
                 } else if (maze.getPoint(forward_coord) == Tile.PASS) {
-                    logger.info("Moving Forwards");
                     runner.moveForward();
                 } else if (maze.getPoint(left_coord) == Tile.PASS) {
-                    logger.info("Turning Left");
                     runner.turnLeft();
                     runner.moveForward();
                 } else if (maze.getPoint(rear_coord) == Tile.PASS) {
-                    logger.info("Turning Around");
                     runner.turnRight();
                     runner.turnRight();
                     runner.moveForward();
@@ -74,7 +60,8 @@ public class RightHandAlgo implements MazeSolver{
                     return ("Unable to solve - Runner Trapped");
                 }
             }
-            return runner.canonicalPath();
+            return runner.factorizedPath();
+
         } catch (EntranceException | ExitException e) {
             logger.error(e.getMessage());
             return e.getMessage();

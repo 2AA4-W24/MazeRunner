@@ -23,7 +23,6 @@ public class MazeRunner {
         end_coords = new Coordinate(maze.width() - 1, findEnd());
         logger.info("**** Exit y cooridate: " + end_coords.y());
         coords = new Coordinate(start_coords);
-        logger.info("Coordinates Are: " + coords.toString());
     }
 
     private int findStart() throws EntranceException {
@@ -48,6 +47,10 @@ public class MazeRunner {
 
     public String canonicalPath() {
         return path_logger.getCanonical();
+    }
+
+    public String factorizedPath() {
+        return path_logger.getFactorized();
     }
 
     public Heading heading() {
