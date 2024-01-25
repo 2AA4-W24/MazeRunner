@@ -28,7 +28,6 @@ public class Main {
 
             if (config.has_path()) {
                 logger.info("**** Checking path");
-                System.out.println(config.input_path());
                 PathChecker checker = new PathChecker(maze);
                 boolean check_result = checker.checkPath(config.input_path());
 

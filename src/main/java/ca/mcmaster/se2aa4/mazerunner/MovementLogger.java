@@ -38,6 +38,11 @@ public class MovementLogger {
         }
     }
 
+    public void clear() {
+        path.clear();
+        last_move = Move.NONE;
+    }
+
     public String getCanonical() {
         String canonical = "";
         for (ArrayList<Character> chain : path) {

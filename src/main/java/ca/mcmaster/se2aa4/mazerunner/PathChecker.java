@@ -10,31 +10,30 @@ public class PathChecker {
 	}
 
 	public boolean checkPath(String path) throws EntranceException, ExitException {
-		String reverse_path = PathReverser.reversePath(path);
-		System.out.println(reverse_path);
-		if (runPath(path) | runPath(reverse_path)) {
+		runner = new MazeRunner(maze);
+		boolean correct_east = runPath(path, runner);
+		runner.switchSides();
+		runner.reset();
+		boolean correct_west = runPath(path, runner);
+		if (correct_east | correct_west) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public boolean runPath(String path) throws EntranceException, ExitException {
-		runner = new MazeRunner(maze);
+	private boolean runPath(String path, MazeRunner runner) {
 		for (int i = 0; i < path.length(); i++) {
 			switch (path.charAt(i)) {
 				case 'F':
 					runner.moveForward();
-					System.out.println(i + " - " + path.charAt(i) + " - " + "Moved Forward - " + runner.coords().toString());
 					if (maze.getPoint(runner.coords()) == Tile.WALL) {return false;}
 					break;
 				case 'R':
 					runner.turnRight();
-					System.out.println(i + " - " + path.charAt(i) + " - " + "Turned Right - " + runner.coords().toString());
 					break;
 				case 'L':
 					runner.turnLeft();
-					System.out.println(i + " - " + path.charAt(i) + " - " + "Turned Left - " + runner.coords().toString());
 					break;
 				default:
 					break;

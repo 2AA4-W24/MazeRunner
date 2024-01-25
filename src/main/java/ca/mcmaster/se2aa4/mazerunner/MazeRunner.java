@@ -14,6 +14,7 @@ public class MazeRunner {
     private Coordinate start_coords;
     private Coordinate end_coords;
     private MovementLogger path_logger = new MovementLogger();
+    private Direction solving_direction;
 
     public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
         maze = maze_in;
@@ -23,6 +24,7 @@ public class MazeRunner {
         end_coords = new Coordinate(maze.width() - 1, findEnd());
         logger.info("**** Exit y cooridate: " + end_coords.y());
         coords = new Coordinate(start_coords);
+        solving_direction = Direction.EAST;
     }
 
     private int findStart() throws EntranceException {
@@ -43,6 +45,33 @@ public class MazeRunner {
             }
         }
         throw new ExitException("Unable to find maze exit");
+    }
+
+    public void switchSides() {
+        Coordinate start_new = new Coordinate(end_coords);
+        Coordinate end_new = new Coordinate(start_coords);
+        start_coords = start_new;
+        end_coords = end_new;
+
+        if (solving_direction == Direction.EAST) {
+            heading = Heading.LEFT;
+            solving_direction = Direction.WEST;
+        } else {
+            heading = Heading.RIGHT;
+            solving_direction = Direction.EAST;
+        }
+
+    }
+
+    public void reset() {
+        coords = new Coordinate(start_coords);
+        path_logger.clear();
+
+        if (solving_direction == Direction.EAST) {
+            heading = Heading.RIGHT;
+        } else {
+            heading = Heading.LEFT;
+        }
     }
 
     public String canonicalPath() {
@@ -112,4 +141,8 @@ public class MazeRunner {
 
 enum Heading {
     UP, DOWN, LEFT, RIGHT
+}
+
+enum Direction {
+    EAST, WEST
 }
