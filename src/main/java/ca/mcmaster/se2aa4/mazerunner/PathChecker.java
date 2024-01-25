@@ -9,7 +9,7 @@ public class PathChecker {
 		maze = maze_in;
 	}
 
-	public boolean checkPath(String path) throws EntranceException, ExitException {
+	public boolean checkPath(String path) throws EntranceException {
 		runner = new MazeRunner(maze);
 		boolean correct_east = runPath(path, runner);
 		runner.switchSides();

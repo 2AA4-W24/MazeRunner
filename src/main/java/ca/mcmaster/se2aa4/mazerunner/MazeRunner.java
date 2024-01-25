@@ -9,33 +9,33 @@ public class MazeRunner {
     private static final Logger logger = LogManager.getLogger();
 
     private Maze maze;
-    private Coordinate coords;
+    private Coordinates coords;
     private Heading heading;
-    private Coordinate start_coords;
-    private Coordinate end_coords;
+    private Coordinates start_coords;
+    private Coordinates end_coords;
     private MovementLogger path_logger;
     private Direction solving_direction;
     private EntranceFinder finder;
 
-    public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
+    public MazeRunner(Maze maze_in) throws EntranceException {
         maze = maze_in;
         finder = new EntranceFinder(maze_in);
         path_logger = new MovementLogger();
         heading = Heading.RIGHT;
         
-        start_coords = new Coordinate(0,finder.findWestEntrance());
+        start_coords = new Coordinates(0,finder.findWestEntrance());
         logger.info("**** Entrance y cooridate: " + start_coords.y());
 
-        end_coords = new Coordinate(maze.width() - 1, finder.findEastEntrance());
+        end_coords = new Coordinates(maze.width() - 1, finder.findEastEntrance());
         logger.info("**** Exit y cooridate: " + end_coords.y());
 
-        coords = new Coordinate(start_coords);
+        coords = new Coordinates(start_coords);
         solving_direction = Direction.EAST;
     }
 
     public void switchSides() {
-        Coordinate start_new = new Coordinate(end_coords);
-        Coordinate end_new = new Coordinate(start_coords);
+        Coordinates start_new = new Coordinates(end_coords);
+        Coordinates end_new = new Coordinates(start_coords);
         start_coords = start_new;
         end_coords = end_new;
 
@@ -50,7 +50,7 @@ public class MazeRunner {
     }
 
     public void reset() {
-        coords = new Coordinate(start_coords);
+        coords = new Coordinates(start_coords);
         path_logger.clear();
 
         if (solving_direction == Direction.EAST) {
@@ -72,8 +72,8 @@ public class MazeRunner {
         return heading;
     }
 
-    public Coordinate coords() {
-        Coordinate temp_coord = new Coordinate(coords);
+    public Coordinates coords() {
+        Coordinates temp_coord = new Coordinates(coords);
         return temp_coord;
     }
 

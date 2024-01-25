@@ -44,7 +44,7 @@ public class Main {
                 System.out.println("Solution: " + solution);
             }
 
-        } catch(IOException | ParseException | EntranceException | ExitException e) {
+        } catch(IOException | ParseException | EntranceException e) {
             logger.error(e.getMessage());
             System.exit(1);
         }

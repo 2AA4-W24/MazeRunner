@@ -12,10 +12,10 @@ public class RightHandAlgo implements MazeSolver{
             MazeRunner runner = new MazeRunner(maze);
 
             while (!runner.reachedExit()) {
-                Coordinate right_coord = new Coordinate(runner.coords());
-                Coordinate forward_coord = new Coordinate(runner.coords());
-                Coordinate left_coord = new Coordinate(runner.coords());
-                Coordinate rear_coord = new Coordinate(runner.coords());
+                Coordinates right_coord = new Coordinates(runner.coords());
+                Coordinates forward_coord = new Coordinates(runner.coords());
+                Coordinates left_coord = new Coordinates(runner.coords());
+                Coordinates rear_coord = new Coordinates(runner.coords());
 
                 if (runner.heading() == Heading.UP) {
                     right_coord.setX(right_coord.x() + 1);
@@ -62,7 +62,7 @@ public class RightHandAlgo implements MazeSolver{
             }
             return runner.factorizedPath();
 
-        } catch (EntranceException | ExitException e) {
+        } catch (EntranceException e) {
             logger.error(e.getMessage());
             return e.getMessage();
         }

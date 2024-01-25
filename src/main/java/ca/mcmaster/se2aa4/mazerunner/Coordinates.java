@@ -1,20 +1,20 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-public class Coordinate {
+public class Coordinates {
 	private int x_coord;
 	private int y_coord;
 
-	public Coordinate() {
+	public Coordinates() {
 		x_coord = 0;
 		y_coord = 0;
 	}
 
-	public Coordinate(int x, int y) {
+	public Coordinates(int x, int y) {
 		x_coord = x;
 		y_coord = y;
 	}
 
-	public Coordinate(Coordinate coordinate_copy) {
+	public Coordinates(Coordinates coordinate_copy) {
 		x_coord = coordinate_copy.x();
 		y_coord = coordinate_copy.y();
 	}
