@@ -13,38 +13,24 @@ public class MazeRunner {
     private Heading heading;
     private Coordinate start_coords;
     private Coordinate end_coords;
-    private MovementLogger path_logger = new MovementLogger();
+    private MovementLogger path_logger;
     private Direction solving_direction;
+    private EntranceFinder finder;
 
     public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
         maze = maze_in;
+        finder = new EntranceFinder(maze_in);
+        path_logger = new MovementLogger();
         heading = Heading.RIGHT;
-        start_coords = new Coordinate(0,findStart());
+        
+        start_coords = new Coordinate(0,finder.findWestEntrance());
         logger.info("**** Entrance y cooridate: " + start_coords.y());
-        end_coords = new Coordinate(maze.width() - 1, findEnd());
+
+        end_coords = new Coordinate(maze.width() - 1, finder.findEastEntrance());
         logger.info("**** Exit y cooridate: " + end_coords.y());
+
         coords = new Coordinate(start_coords);
         solving_direction = Direction.EAST;
-    }
-
-    private int findStart() throws EntranceException {
-        ArrayList<Tile> entry_column = maze.getColumn(0);
-        for (int i = 0; i < entry_column.size(); i++) {
-            if(entry_column.get(i) == Tile.PASS) {
-                return i;
-            }
-        }
-        throw new EntranceException("Unable to find maze entrance");
-    }
-
-    private int findEnd() throws ExitException {
-        ArrayList<Tile> entry_column = maze.getColumn(maze.width() - 1);
-        for (int i = 0; i < entry_column.size(); i++) {
-            if(entry_column.get(i) == Tile.PASS) {
-                return i;
-            }
-        }
-        throw new ExitException("Unable to find maze exit");
     }
 
     public void switchSides() {
