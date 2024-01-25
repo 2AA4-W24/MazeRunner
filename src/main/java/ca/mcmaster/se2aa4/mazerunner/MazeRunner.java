@@ -1,4 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -7,65 +9,103 @@ public class MazeRunner {
     private static final Logger logger = LogManager.getLogger();
 
     private Maze maze;
-    private int x_coord;
-    private int y_coord;
+    private Coordinate coords;
     private Heading heading;
-    private String path;
-    private int start_coord;
-    private int end_coord;
+    private Coordinate start_coords;
+    private Coordinate end_coords;
+    private MovementLogger path_logger = new MovementLogger();
+    private Direction solving_direction;
 
-    public MazeRunner(Maze maze_in) {
+    public MazeRunner(Maze maze_in) throws EntranceException, ExitException {
         maze = maze_in;
-        path = "";
-        start_coord = findStart();
-        logger.info("Entrance y cooridate: " + start_coord);
-        end_coord = findEnd();
-        logger.info("Exit y cooridate: " + end_coord);
+        heading = Heading.RIGHT;
+        start_coords = new Coordinate(0,findStart());
+        logger.info("**** Entrance y cooridate: " + start_coords.y());
+        end_coords = new Coordinate(maze.width() - 1, findEnd());
+        logger.info("**** Exit y cooridate: " + end_coords.y());
+        coords = new Coordinate(start_coords);
+        solving_direction = Direction.EAST;
     }
 
-    private int findStart() {
-        return 2;
+    private int findStart() throws EntranceException {
+        ArrayList<Tile> entry_column = maze.getColumn(0);
+        for (int i = 0; i < entry_column.size(); i++) {
+            if(entry_column.get(i) == Tile.PASS) {
+                return i;
+            }
+        }
+        throw new EntranceException("Unable to find maze entrance");
     }
 
-    private int findEnd() {
-        return 2;
+    private int findEnd() throws ExitException {
+        ArrayList<Tile> entry_column = maze.getColumn(maze.width() - 1);
+        for (int i = 0; i < entry_column.size(); i++) {
+            if(entry_column.get(i) == Tile.PASS) {
+                return i;
+            }
+        }
+        throw new ExitException("Unable to find maze exit");
     }
 
-    public int getEnd() {
-        return end_coord;
+    public void switchSides() {
+        Coordinate start_new = new Coordinate(end_coords);
+        Coordinate end_new = new Coordinate(start_coords);
+        start_coords = start_new;
+        end_coords = end_new;
+
+        if (solving_direction == Direction.EAST) {
+            heading = Heading.LEFT;
+            solving_direction = Direction.WEST;
+        } else {
+            heading = Heading.RIGHT;
+            solving_direction = Direction.EAST;
+        }
+
     }
 
-    public String getPath() {
-        return new String(path);
+    public void reset() {
+        coords = new Coordinate(start_coords);
+        path_logger.clear();
+
+        if (solving_direction == Direction.EAST) {
+            heading = Heading.RIGHT;
+        } else {
+            heading = Heading.LEFT;
+        }
     }
 
-    public Heading getHeading() {
+    public String canonicalPath() {
+        return path_logger.getCanonical();
+    }
+
+    public String factorizedPath() {
+        return path_logger.getFactorized();
+    }
+
+    public Heading heading() {
         return heading;
     }
 
-    public int xCoord() {
-        return x_coord;
-    }
-
-    public int yCoord() {
-        return y_coord;
+    public Coordinate coords() {
+        Coordinate temp_coord = new Coordinate(coords);
+        return temp_coord;
     }
 
     public void moveForward() {
-        path = path + "F";
+        path_logger.forward();
         if (heading == Heading.UP) {
-            y_coord++;
+            coords.setY(coords.y() - 1);
         } else if (heading == Heading.DOWN) {
-            y_coord--;
+            coords.setY(coords.y() + 1);
         } else if (heading == Heading.RIGHT) {
-            x_coord++;
+            coords.setX(coords.x() + 1);
         } else if (heading == Heading.LEFT) {
-            x_coord--;
+            coords.setX(coords.x() - 1);
         }
     }
 
     public void turnRight() {
-        path = path + "R";
+        path_logger.right();
         if (heading == Heading.UP) {
             heading = Heading.RIGHT;
         } else if (heading == Heading.DOWN) {
@@ -78,7 +118,7 @@ public class MazeRunner {
     }
 
     public void turnLeft() {
-        path = path + "L";
+        path_logger.left();
         if (heading == Heading.UP) {
             heading = Heading.LEFT;
         } else if (heading == Heading.DOWN) {
@@ -90,8 +130,19 @@ public class MazeRunner {
         }
     }
 
+    public boolean reachedExit() {
+        if (coords.x() == end_coords.x() & coords.y() == end_coords.y()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 enum Heading {
     UP, DOWN, LEFT, RIGHT
+}
+
+enum Direction {
+    EAST, WEST
 }
