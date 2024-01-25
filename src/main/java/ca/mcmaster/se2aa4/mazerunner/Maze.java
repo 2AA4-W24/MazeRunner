@@ -6,7 +6,7 @@ public interface Maze {
     public void addLine(ArrayList<Tile> line_in);
     public int height();
     public int width();
-    public Tile getPoint(Coordinates point);
+    public Tile getPoint(Coordinate point);
     public ArrayList<Tile> getLine(int line_number);
     public ArrayList<Tile> getColumn(int column_number);
 }

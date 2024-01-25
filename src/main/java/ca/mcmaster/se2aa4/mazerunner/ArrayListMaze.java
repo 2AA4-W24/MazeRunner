@@ -31,7 +31,7 @@ public class ArrayListMaze implements Maze {
         return maze_width;
     }
 
-    public Tile getPoint(Coordinates point) {
+    public Tile getPoint(Coordinate point) {
         return maze.get(point.y()).get(point.x());
     }
 

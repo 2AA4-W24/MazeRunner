@@ -12,10 +12,10 @@ public class RightHandAlgo implements MazeSolver{
             MazeRunner runner = new MazeRunner(maze);
 
             while (!runner.reachedExit()) {
-                Coordinates right_coord = new Coordinates(runner.coords());
-                Coordinates forward_coord = new Coordinates(runner.coords());
-                Coordinates left_coord = new Coordinates(runner.coords());
-                Coordinates rear_coord = new Coordinates(runner.coords());
+                Coordinate right_coord = new Coordinate(runner.coords());
+                Coordinate forward_coord = new Coordinate(runner.coords());
+                Coordinate left_coord = new Coordinate(runner.coords());
+                Coordinate rear_coord = new Coordinate(runner.coords());
 
                 if (runner.heading() == Heading.UP) {
                     right_coord.setX(right_coord.x() + 1);
