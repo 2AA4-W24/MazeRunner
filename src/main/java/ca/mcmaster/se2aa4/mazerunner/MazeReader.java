@@ -10,19 +10,23 @@ public class MazeReader {
     public String maze_file;
 
     public MazeReader(String maze_in) {
+        /* Constructor */
         maze_file = maze_in;
     }
 
     public Maze readMaze() throws FileNotFoundException, IOException {
-        Maze maze = new ArrayListMaze();
+        /* Reads maze from file into Maze object*/
 
+        // Initializing maze object, file readers, and other vars.
+        Maze maze = new ArrayListMaze();
         BufferedReader read = new BufferedReader(new FileReader(maze_file));
         String line_in;
         ArrayList<Tile> line = new ArrayList<Tile>();
 
+        // Reading into the maze object line by line
         while ((line_in = read.readLine()) != null) {
-            line.clear();
 
+            line.clear();
             for (int i = 0; i < line_in.length(); i++) {
                 if (line_in.charAt(i) == '#') {
                     line.add(Tile.WALL);

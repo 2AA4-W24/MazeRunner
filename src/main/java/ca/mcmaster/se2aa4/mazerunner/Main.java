@@ -1,9 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputFilter.Config;
-import java.lang.module.Configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,12 +17,14 @@ public class Main {
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
 
-        try {
+        try {  
+            // Getting configuration and reading the maze file into a maze object
             Configuration config = configure(args);
             logger.info("**** Reading the maze from file " + config.input_maze());
             MazeReader reader = new MazeReader(config.input_maze());
             Maze maze = reader.readMaze();
 
+            // Path Checking (-p flag)
             if (config.has_path()) {
                 logger.info("**** Checking path");
                 PathChecker checker = new PathChecker(maze);
@@ -36,7 +35,8 @@ public class Main {
                 } else {
                     System.out.println("Your input solution is incorrect.");
                 }
-
+            
+            // Pathfinding (no -p flag)
             } else {
                 logger.info("**** Computing path");
                 MazeSolver solver = new RightHandAlgo();
@@ -52,6 +52,7 @@ public class Main {
     }
 
     private static Configuration configure(String[] args) throws ParseException{
+        // Getting commandline arguments
         Options options = new Options();
         options.addOption("i", true, "flag for maze file location");
         options.addOption("p", true, "flag for path checking");
